@@ -53,7 +53,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="margin-top: 10px;">
             {% for product in product_objects %}
             <div class="col-md-3">
                 <div class="card">
@@ -71,8 +71,8 @@
         </div>
 
         <div class="row">
-            <div class="col-md-3 offset-4">
-                <ul class="pagination">
+            <div class="col-md-3 offset-5">
+                <ul class="pagination" style="margin-top: 30px;">
                     {% if product_objects.has_previous %}
                         <li class="page-item">
                             <a class="page-link" href="?page={{ product_objects.previous_page_number }}">Previous</a>
@@ -132,9 +132,12 @@
         var cartString = "";
         cartString = "Have a good shop 😊</br>";
         var counter = 1;
-        for(var x in cart){
+
+        let cartObject = JSON.parse(localStorage.getItem('cart'));
+
+        for(item in cartObject){
             cartString += counter + ") ";
-            cartString += document.getElementById("nm"+x).innerHTML + " Qnt<" + cart[x][0] +">" + "</br>";
+            cartString += cartObject[item][1] + " Qnt<" + cartObject[item][0] +">" + "</br>";
             counter += 1;
         }
         cartString += "<a href='/checkout'><button id='checkout' class='btn btn-warning'>Checkout</button></a>"
