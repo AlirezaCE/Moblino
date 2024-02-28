@@ -23,12 +23,13 @@ def detail(request,id):
 def checkout(request):
 
     if request.method == "POST":
+        item = request.POST.get('items',"")
         name = request.POST.get('name',"")
         email = request.POST.get('email',"")
         address = request.POST.get('address',"")
         city = request.POST.get('city',"")
         
-        order = Order(name=name, email=email, address=address, city=city)
+        order = Order(item=item,name=name, email=email, address=address, city=city)
         order.save()
 
     return render(request,'shop/checkout.html')

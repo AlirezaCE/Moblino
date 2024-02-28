@@ -9,17 +9,18 @@
 </head>
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-5">
+        <div class="row" style="margin-top: 25px">
+            <div class="col-md-12">
                 <ul id="list_group" class="list-group">
 
                   </ul>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top: 70px">
             <div class="col-md-12">
                 <form method="POST">
                     {% csrf_token %}
+                    <input type="hidden" id="items" name="items">
                     <div class="form-row">
                       <div class="form-group col-md-6">
                         <label for="name">Name</label>
@@ -32,13 +33,17 @@
                     </div>
                     <div class="form-group">
                       <label for="address">Address</label>
-                      <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St">
+                      <input type="text" class="form-control" id="address" name="address" placeholder="Beheshti Street">
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-6">
                         <label for="city">City</label>
-                        <input type="text" class="form-control" id="city" name="city">
+                        <input type="text" class="form-control" id="city" name="city" placeholder="Tehran">
                       </div>
+                    </div>
+                    <div class="form-group" style="display: none;" >
+                        <label for="totalAmount">totalAmount</label>
+                        <input type="hidden" class="form-control" id="totalAmount" name="totalAmount">
                     </div>
                     <button type="submit" class="btn btn-primary">Order 🛒</button>
                 </form>
@@ -55,16 +60,26 @@
         cart = JSON.parse(localStorage.getItem('cart'));
     }
 
+    totalPrice = 0;
     for(item in cart){
-        let name = cart[item][1]
         let quantity = cart[item][0];
-        
+        let name = cart[item][1]
+        let price = cart[item][2]
+        totalPrice += price;
+
         itemString = `<li class="list-group-item d-flex justify-content-between align-items-center">`+
-                        `${name}`+
-                        `<span class="badge badge-primary badge-pill">${quantity}</span></li>`;
+                        `<span class=""> <span class="badge badge-warning badge-pill">${quantity}</span>  of ${name}</span>`+
+                        `<span class="badge badge-primary badge-pill">${price}</span></li>`;
 
         $('#list_group').append(itemString);
     }
+
+    totalPriceString = `<li class="list-group-item d-flex justify-content-between align-items-center"><b>Total Price: </b>`+
+        `<span class="badge badge-primary badge-pill">${totalPrice}</span></li>`;
+
+    $('#list_group').append(totalPriceString);
+
+$('#items').val(JSON.stringify(cart));
 
 </script>
 
