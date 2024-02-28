@@ -17,3 +17,4 @@ class Order(models.Model):
     email = models.EmailField(max_length=200)
     address = models.CharField(max_length=1000)
     city = models.CharField(max_length=200)
+    total = models.CharField(max_length=200)
